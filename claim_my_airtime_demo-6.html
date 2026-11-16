@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ClaimMyAirtime — Airtime Giveaway</title>
+<style>
+:root{--navy:#101b3d;--blue:#315efb;--mint:#dff9ee;--ink:#17213b;--muted:#6d7892;--line:#e7ebf3}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:#f4f7fc;color:var(--ink)}
+header{background:var(--navy);color:white;padding:22px 18px 76px}
+.top{max-width:960px;margin:auto;display:flex;align-items:center;justify-content:space-between}
+.logo{font-weight:850;font-size:20px;letter-spacing:-.5px}.logo span{color:#76e3b5}
+.badge{font-size:11px;border:1px solid #526080;border-radius:20px;padding:7px 10px;color:#dce5ff}
+.hero{max-width:960px;margin:38px auto 0}.hero h1{font-size:clamp(30px,6vw,48px);line-height:1.08;margin:0 0 12px;letter-spacing:-1.5px}.hero p{color:#c4cee6;margin:0;max-width:540px;line-height:1.6}
+main{max-width:960px;margin:-44px auto 50px;padding:0 16px;display:grid;grid-template-columns:1.2fr .8fr;gap:18px}
+.card{background:white;border:1px solid var(--line);border-radius:20px;padding:24px;box-shadow:0 12px 35px #18284b0b}
+.balance{background:linear-gradient(135deg,#315efb,#654df0);color:white;border:0}.label{font-size:12px;opacity:.8}.amount{font-size:38px;font-weight:850;letter-spacing:-1px;margin:7px 0}.balance small{opacity:.8}
+h2{font-size:20px;margin:0 0 7px}.sub{color:var(--muted);font-size:13px;line-height:1.5;margin:0 0 20px}
+label{display:block;font-size:13px;font-weight:700;margin:15px 0 7px}
+input,select{width:100%;padding:14px;border:1px solid #dce2ee;border-radius:11px;font:inherit;background:#fff;color:var(--ink);outline:none}
+input:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 3px #315efb18}
+button{width:100%;border:0;border-radius:11px;background:var(--blue);color:white;font-weight:800;font-size:15px;padding:15px;margin-top:18px;cursor:pointer}
+button:active{transform:scale(.99)}.note{font-size:11px;color:var(--muted);line-height:1.5;margin-top:14px}
+.steps{display:grid;gap:15px}.step{display:flex;gap:12px;align-items:flex-start}.num{width:28px;height:28px;border-radius:9px;background:var(--mint);color:#08794b;display:grid;place-items:center;font-weight:800;flex:none}.step b{font-size:13px}.step p{font-size:12px;color:var(--muted);margin:4px 0 0;line-height:1.5}
+.status{display:none;margin-top:15px;padding:12px;border-radius:10px;font-size:13px;line-height:1.5}.status.show{display:block}.status.ok{background:#e9f9f0;color:#12643c}.status.bad{background:#fff1f0;color:#a52b24}
+.admin{margin-top:18px;border-top:1px solid var(--line);padding-top:16px}.admin summary{font-size:13px;font-weight:750;cursor:pointer}.admin p{font-size:11px;color:var(--muted);line-height:1.5}
+footer{text-align:center;color:#8a94a9;font-size:11px;padding:0 15px 28px}
+@media(max-width:700px){main{grid-template-columns:1fr;margin-top:-38px}.hero{margin-top:30px}.card{padding:21px}}
+</style>
+</head>
+<body>
+<header>
+ <div class="top"><div class="logo">Claim<span>My</span>Airtime</div><div class="badge">AIRTIME GIVEAWAY</div></div>
+ <div class="hero"><h1>A little airtime.<br>A brighter day.</h1><p>Enter your phone number and try claiming airtime from the giveaway pool. When the available balance is finished, claims will close.</p></div>
+</header>
+<main>
+ <section>
+  <div class="card balance"><div class="label">GIVEAWAY BALANCE · DEMO</div><div class="amount" id="balance">₦5,000</div><small>Sample balance for preview only</small></div>
+  <div class="card" style="margin-top:16px">
+   <h2>Claim your airtime</h2><p class="sub">Fill in your details below. Each phone number can claim once in this demo.</p>
+   <form id="claimForm">
+    <label for="phone">Phone number</label><input id="phone" inputmode="numeric" autocomplete="tel" maxlength="11" placeholder="e.g. 08012345678" required>
+    <label for="network">Select network</label><select id="network" required><option value="">Choose your network</option><option>MTN</option><option>Airtel</option><option>Glo</option><option>9mobile</option></select>
+    <button type="submit">CLAIM ₦100 AIRTIME</button>
+   </form>
+   <div class="status" id="status" role="status"></div>
+   <p class="note">Preview only: this page does not send airtime or collect payments. Real airtime delivery requires a secure server and an authorised VTU provider API.</p>
+  </div>
+ </section>
+ <aside>
+  <div class="card"><h2>How it works</h2><p class="sub">Three simple steps</p><div class="steps">
+   <div class="step"><div class="num">1</div><div><b>Enter your number</b><p>Use the phone number you want to receive airtime on.</p></div></div>
+   <div class="step"><div class="num">2</div><div><b>Choose your network</b><p>Select the correct mobile network.</p></div></div>
+   <div class="step"><div class="num">3</div><div><b>Submit your claim</b><p>The live version will check the balance and send airtime securely.</p></div></div>
+  </div>
+  <details class="admin"><summary>Demo owner controls</summary><p>For preview/testing only. Set the sample giveaway balance in this browser. This does not purchase or store real airtime.</p>
+   <label for="setBalance">Set demo balance (₦)</label><input id="setBalance" type="number" min="0" max="1000000" value="5000">
+   <button type="button" id="saveBalance">Update demo balance</button>
+  </details>
+  </div>
+ </aside>
+</main>
+<footer>ClaimMyAirtime · Demo website · Protect your personal information</footer>
+<script>
+const KEY='claimmyairtime_demo_v1';
+let state=JSON.parse(localStorage.getItem(KEY)||'null')||{balance:5000,claimed:[]};
+const money=n=>'₦'+Number(n).toLocaleString('en-NG');
+const balanceEl=document.getElementById('balance');
+function render(){balanceEl.textContent=money(state.balance);document.getElementById('setBalance').value=state.balance;localStorage.setItem(KEY,JSON.stringify(state))}
+function message(text,ok){const el=document.getElementById('status');el.textContent=text;el.className='status show '+(ok?'ok':'bad')}
+document.getElementById('claimForm').addEventListener('submit',e=>{
+ e.preventDefault();const phone=document.getElementById('phone').value.replace(/\D/g,'');const network=document.getElementById('network').value;
+ if(!/^0\d{10}$/.test(phone)){message('Enter a valid 11-digit Nigerian phone number.',false);return}
+ if(!network){message('Please select your network.',false);return}
+ if(state.claimed.includes(phone)){message('This number has already claimed in this browser demo.',false);return}
+ if(state.balance<100){message('Sorry, the giveaway balance is finished.',false);return}
+ state.balance-=100;state.claimed.push(phone);render();
+ message('Demo claim recorded for '+phone+' ('+network+'). No airtime was sent. Connect a VTU API to enable real delivery.',true);
+ e.target.reset();
+});
+document.getElementById('saveBalance').addEventListener('click',()=>{
+ const n=Number(document.getElementById('setBalance').value);
+ if(!Number.isFinite(n)||n<0||n>1000000){message('Enter a valid demo balance.',false);return}
+ state.balance=Math.floor(n);render();message('Demo balance updated in this browser only.',true);
+});
+render();
+</script>
+</body>
+</html>
